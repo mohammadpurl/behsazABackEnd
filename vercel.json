@@ -1,20 +1,23 @@
 {
-    "devCommand": "uvicorn app.main:app --host 127.0.0.1 --port 4000",
+    "version": 2,
     "builds": [
         {
             "src": "main.py",
             "use": "@vercel/python",
             "config": {
-                "includeFiles": [
-                    "dist/**/*"
-                ]
+                "maxLambdaSize": "250mb"
             }
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "/dist/index.js"
+            "dest": "main.py"
         }
-    ]
+    ],
+    "functions": {
+        "main.py": {
+            "maxDuration": 30
+        }
+    }
 }
